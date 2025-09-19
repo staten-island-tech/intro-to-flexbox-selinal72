@@ -4,11 +4,20 @@ html * {
   padding: 0;
   box-sizing: border-box;
   text-align: center;
+  font-family: "UnifrakturMaguntia", cursive;
 }
 
 body {
   background-image: url("imgs/starrybg.png");
   color: #023173;
+}
+
+h1 {
+  font-size: 100px;
+}
+
+.header {
+  padding: 20px 20px;
 }
 
 .container {
@@ -28,6 +37,7 @@ body {
   margin: 3rem 0;
   border: 2px solid white;
   border-radius: 10px;
+  box-shadow: white 0px 1px 40px;
 
   display: flex;
   flex-direction: column;
