@@ -1,10 +1,130 @@
 const items = [
   {
+    name: "chenyu adeptea",
+    seller: "fengtai",
+    region: "chenyu vale",
+    price: 240,
+    img: "imgs/adeptea.webp",
+    alt: "chenyu adeptea",
+  },
+  {
+    name: "almond",
+    seller: "dongsheng",
+    region: "teyvat",
+    price: 120,
+    img: "imgs/almond.webp",
+    alt: "almond",
+  },
+  {
+    name: "bamboo shoot",
+    seller: "chef mao",
+    region: "liyue",
+    price: 240,
+    img: "imgs/bamboo.webp",
+    alt: "bamboo shoot",
+  },
+  {
+    name: "jueyun chili",
+    seller: "chef mao",
+    region: "liyue",
+    price: 1000,
+    img: "imgs/chili.webp",
+    alt: "jueyun chili",
+  },
+  {
+    name: "clearwater jade",
+    seller: "fengtai",
+    region: "chenyu vale",
+    price: 1000,
+    img: "imgs/clearwaterjade.webp",
+    alt: "clearwater jade",
+  },
+  {
+    name: "cor lapis",
+    seller: "fengtai",
+    region: "liyue",
+    price: 1000,
+    img: "imgs/corlapis.webp",
+    alt: "cor lapis",
+  },
+  {
+    name: "glaze lily",
+    seller: "ms. bai",
+    region: "liyue",
+    price: 50000,
+    img: "imgs/glazelily.webp",
+    alt: "glaze lily",
+  },
+  {
+    name: "horsetail",
+    seller: "herbalist gui",
+    region: "liyue",
+    price: 240,
+    img: "imgs/horsetail.webp",
+    alt: "horsetail",
+  },
+  {
+    name: "noctilucous jade",
+    seller: "fengtai",
+    region: "liyue",
+    price: 1000,
+    img: "imgs/jade.webp",
+    alt: "noctilucous jade",
+  },
+  {
+    name: "lotus head",
+    seller: "chef mao",
+    region: "teyvat",
+    price: 300,
+    img: "imgs/lotushead.webp",
+    alt: "lotus head",
+  },
+  {
+    name: "matsutake",
+    seller: "chef mao",
+    region: "teyvat",
+    price: 300,
+    img: "imgs/matsutake.webp",
+    alt: "matsutake",
+  },
+  {
+    name: "qingxin",
+    seller: "herbalist gui",
+    region: "liyue",
+    price: 600,
+    img: "imgs/qingxin.webp",
+    alt: "qingxin",
+  },
+  {
     name: "radish",
     seller: "chef mao",
     region: "teyvat",
     price: 350,
     img: "imgs/radish.webp",
+  },
+  {
+    name: "rice",
+    seller: "dongsheng",
+    region: "liyue",
+    price: 100,
+    img: "imgs/rice.webp",
+    alt: "rice",
+  },
+  {
+    name: "shrimp",
+    seller: "dongsheng",
+    region: "liyue",
+    price: 120,
+    img: "imgs/shrimp.webp",
+    alt: "shrimp",
+  },
+  {
+    name: "silk flower",
+    seller: "fengtai",
+    region: "liyue",
+    price: 1000,
+    img: "imgs/silkflower.webp",
+    alt: "silk flower",
   },
   {
     name: "snapdragon",
@@ -14,32 +134,20 @@ const items = [
     img: "imgs/snapdragon.webp",
   },
   {
-    name: "lotus head",
-    seller: "chef mao",
-    region: "teyvat",
-    price: 300,
-    img: "imgs/lotushead.webp",
-  },
-  {
-    name: "jueyun chili",
-    seller: "chef mao",
+    name: "starconch",
+    seller: "bolai",
     region: "liyue",
     price: 1000,
-    img: "imgs/chili.webp",
+    img: "imgs/starconch.webp",
+    alt: "starconch",
   },
   {
-    name: "qingxin",
-    seller: "herbalist gui",
-    region: "liyue",
-    price: 600,
-    img: "imgs/qingxin.webp",
-  },
-  {
-    name: "horsetail",
-    seller: "herbalist gui",
-    region: "liyue",
-    price: 240,
-    img: "imgs/horsetail.webp",
+    name: "tofu",
+    seller: "dongsheng",
+    region: "teyvat",
+    price: 100,
+    img: "imgs/tofu.webp",
+    alt: "tofu",
   },
   {
     name: "violetgrass",
@@ -47,27 +155,7 @@ const items = [
     region: "liyue",
     price: 1000,
     img: "imgs/violetgrass.webp",
-  },
-  {
-    name: "qingxin",
-    seller: "chef mao",
-    region: "teyvat",
-    price: 300,
-    img: "imgs/lotushead.webp",
-  },
-  {
-    name: "matsutake",
-    seller: "chef mao",
-    region: "teyvat",
-    price: 300,
-    img: "imgs/matsutake.webp",
-  },
-  {
-    name: "tofu",
-    seller: "ms. bai",
-    region: "teyvat",
-    price: 120,
-    img: "imgs/tofu.webp",
+    alt: "violetgrass",
   },
 ];
 
@@ -94,18 +182,21 @@ const DOMSelectors = {
 }); */
 
 function inject(item) {
-  DOMSelectors.display.insertAdjacentHTML(
+  const container = document.querySelector(".container");
+  container.insertAdjacentHTML(
     "afterbegin",
     `<div class="card">
       <h2 class="card-header">${item.name}</h2>
-      <img class="card-img" src="${item.img}"/>
-      <h3 class="card-seller">${item.seller}/h3>
-      <h3 class="card-region">${item.region}/h3>
-      <h4 class="card-price">${item.price}</h4>
+      <img class="card-img" src="${item.img}" alt="${item.alt}/>
+      <h3 class="card-seller">${item.seller}</h3>
+      <h3 class="card-region">${item.region}</h3>
+      <h4 class="card-price">${item.price} mora</h4>
       <button type="button" class="button">buy now</button>
     </div>`
   );
 }
+/* inject(items[0]); */
+items.forEach((item) => inject(item));
 
 /* function removeItem(event) {
   event.target.parentElement.remove();
