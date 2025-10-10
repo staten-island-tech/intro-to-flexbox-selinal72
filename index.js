@@ -185,18 +185,58 @@ function inject(item) {
   const container = document.querySelector(".container");
   container.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card">
+    `<div class="card" data-title=${item.name} data-category=${item.region}>
       <h2 class="card-header">${item.name}</h2>
       <img class="card-img" src="${item.img}" alt="${item.alt}/>
       <h3 class="card-seller">${item.seller}</h3>
       <h3 class="card-region">${item.region}</h3>
       <h4 class="card-price">${item.price} mora</h4>
-      <button type="button" class="button">buy now</button>
+      <button type="button" class="buy-button">add to cart</button>
     </div>`
   );
 }
 /* inject(items[0]); */
 items.forEach((item) => inject(item));
+
+function getCards() {
+  const buttons = document.querySelectorAll(".buy-button");
+  //not needed unless we want filter etc.
+  const btnArr = Array.from(buttons);
+  btnArr.forEach((btn) =>
+    btn.addEventListener("click", function (event) {
+      console.log(
+        event.target.closest(".card").getAttribute("data-title"),
+        "added to cart"
+        /* event.target.textContent */
+      );
+    })
+  );
+}
+getCards();
+
+const cart = [];
+
+function getCards() {
+  const buttons = document.querySelectorAll(".buy-button");
+  //not needed unless we want filter etc.
+  const btnArr = Array.from(buttons);
+  btnArr.forEach((btn) =>
+    btn.addEventListener("click", function (event) {
+      cart.push(event.target.closest(".card"));
+      /* console.log(
+        event.target.closest(".card").getAttribute("data-title"),
+        "added to cart",
+        event.target.textContent
+      ); */
+    })
+  );
+}
+getCards();
+
+//make array
+//put cards on screen with js
+//make the cart w html, js
+//add to cart button
 
 /* function removeItem(event) {
   event.target.parentElement.remove();
