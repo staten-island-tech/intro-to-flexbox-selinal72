@@ -198,7 +198,7 @@ function inject(item) {
 /* inject(items[0]); */
 items.forEach((item) => inject(item));
 
-function getCards() {
+/* function getCards() {
   const buttons = document.querySelectorAll(".buy-button");
   //not needed unless we want filter etc.
   const btnArr = Array.from(buttons);
@@ -207,12 +207,12 @@ function getCards() {
       console.log(
         event.target.closest(".card").getAttribute("data-title"),
         "added to cart"
-        /* event.target.textContent */
+        event.target.textContent
       );
     })
   );
 }
-getCards();
+getCards(); */
 
 const cart = [];
 
@@ -222,7 +222,11 @@ function getCards() {
   const btnArr = Array.from(buttons);
   btnArr.forEach((btn) =>
     btn.addEventListener("click", function (event) {
-      cart.push(event.target.closest(".card"));
+      /* console.log("clicked"); */
+      cart.push(event.target.closest(".card").getAttribute("data-title"));
+      /* cart.push(event.target.closest(".card").getAttribute("data-title")); */
+      console.log(cart);
+      cart.forEach((product) => console.log(product));
       /* console.log(
         event.target.closest(".card").getAttribute("data-title"),
         "added to cart",
@@ -230,8 +234,18 @@ function getCards() {
       ); */
     })
   );
+  document
+    .querySelector(".container")
+    .insertAdjacentHTML("afterbegin", `<h1 class="cart">test</h1>`);
+  /* document.querySelector(".cart").textContent = `testing`; */
 }
 getCards();
+
+/* function carting(product) {
+  document.querySelector(".container").insertAdjacentHTML("afterbegin", `<h1 class="cart">test</h1>`);
+} */
+
+/* cart.forEach((product) => carting(product)); */
 
 //make array
 //put cards on screen with js
