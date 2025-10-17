@@ -185,7 +185,7 @@ function inject(item) {
   const container = document.querySelector(".container");
   container.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card" data-title=${item.name} data-category=${item.region}>
+    `<div class="card" data-title=${item.name} data-category=${item.region} data-price=${item.price}>
       <h2 class="card-header">${item.name}</h2>
       <img class="card-img" src="${item.img}" alt="${item.alt}/>
       <h3 class="card-seller">${item.seller}</h3>
@@ -215,18 +215,23 @@ items.forEach((item) => inject(item));
 getCards(); */
 
 const cart = [];
+const buttons = document.querySelectorAll(".buy-button");
+const btnArr = Array.from(buttons);
 
 function getCards() {
-  const buttons = document.querySelectorAll(".buy-button");
   //not needed unless we want filter etc.
-  const btnArr = Array.from(buttons);
   btnArr.forEach((btn) =>
     btn.addEventListener("click", function (event) {
       /* console.log("clicked"); */
-      cart.push(event.target.closest(".card").getAttribute("data-title"));
+
+      cart.push([
+        event.target.closest(".card").getAttribute("data-title"),
+        event.target.closest(".card").getAttribute("data-price"),
+        event.target.closest(".card").getAttribute("data-category"),
+      ]);
       /* cart.push(event.target.closest(".card").getAttribute("data-title")); */
-      console.log(cart);
-      cart.forEach((product) => console.log(product));
+      /* return cart; */
+      cart.forEach((product) => return product);
       /* console.log(
         event.target.closest(".card").getAttribute("data-title"),
         "added to cart",
@@ -234,12 +239,24 @@ function getCards() {
       ); */
     })
   );
-  document
-    .querySelector(".container")
-    .insertAdjacentHTML("afterbegin", `<h1 class="cart">test</h1>`);
   /* document.querySelector(".cart").textContent = `testing`; */
 }
+
+function injectCart() {
+  btnArr.forEach((btn) =>
+    btn.addEventListener("click", function (event) {
+      document
+        .querySelector(".container")
+        .insertAdjacentHTML("afterbegin", `<div class="cart-container">
+        <h1>cart</h1>
+        <li>${product}</li>
+      </div>`);
+    })
+  );
+}
+
 getCards();
+injectCart();
 
 /* function carting(product) {
   document.querySelector(".container").insertAdjacentHTML("afterbegin", `<h1 class="cart">test</h1>`);
