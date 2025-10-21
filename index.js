@@ -198,6 +198,18 @@ function inject(item) {
 /* inject(items[0]); */
 items.forEach((item) => inject(item));
 
+function injectCart() {
+  document.querySelector(".container").insertAdjacentHTML(
+    "afterbegin",
+    `<div class="cart-container">
+    <h1>cart</h1>
+    <div class="list-container"></div>
+  </div>`
+  );
+}
+
+injectCart();
+
 /* function getCards() {
   const buttons = document.querySelectorAll(".buy-button");
   //not needed unless we want filter etc.
@@ -218,6 +230,12 @@ const cart = [];
 const buttons = document.querySelectorAll(".buy-button");
 const btnArr = Array.from(buttons);
 
+function logCart(product) {
+  document
+    .querySelector(".list-container")
+    .insertAdjacentHTML("afterbegin", `<li>${product}</li>`);
+}
+
 function getCards() {
   //not needed unless we want filter etc.
   btnArr.forEach((btn) =>
@@ -227,11 +245,10 @@ function getCards() {
       cart.push([
         event.target.closest(".card").getAttribute("data-title"),
         event.target.closest(".card").getAttribute("data-price"),
-        event.target.closest(".card").getAttribute("data-category"),
       ]);
       /* cart.push(event.target.closest(".card").getAttribute("data-title")); */
       /* return cart; */
-      cart.forEach((product) => return product);
+      cart.forEach((product) => logCart(product));
       /* console.log(
         event.target.closest(".card").getAttribute("data-title"),
         "added to cart",
@@ -241,22 +258,7 @@ function getCards() {
   );
   /* document.querySelector(".cart").textContent = `testing`; */
 }
-
-function injectCart() {
-  btnArr.forEach((btn) =>
-    btn.addEventListener("click", function (event) {
-      document
-        .querySelector(".container")
-        .insertAdjacentHTML("afterbegin", `<div class="cart-container">
-        <h1>cart</h1>
-        <li>${product}</li>
-      </div>`);
-    })
-  );
-}
-
 getCards();
-injectCart();
 
 /* function carting(product) {
   document.querySelector(".container").insertAdjacentHTML("afterbegin", `<h1 class="cart">test</h1>`);
@@ -276,3 +278,30 @@ injectCart();
 /* const button = document.querySelectorAll(".button");
 
 function buy() {} */
+
+/* const books = [];
+
+function filterByGenre(genre) {
+  let display = document.querySelector("#card-display");
+  display.innerHTML = "";
+  const filteredBooks = books.filter((book)=> book.genre === genre);
+  filteredBooks.forEach((book)=>
+    display.insertAdjacentHTML(
+      // html
+    )
+  );
+} */
+
+/* function filterByGenre(genre){
+  const cards = document.querySelectorAll(".book-card");
+  cards.forEach((card) => {
+    const cardCategory = card.getAttribute("data-genre");
+    if(cardCategory === genre || cardCategory === "all"){
+      card.style.display = "block"; // could be block or flex or nothing (contexual!!)
+    } else {
+      card.style.display = "none";
+    }
+  })
+}
+
+filterByGenre("Mystery"); */
