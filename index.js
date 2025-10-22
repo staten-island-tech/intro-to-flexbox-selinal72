@@ -210,6 +210,32 @@ function injectCart() {
 
 injectCart();
 
+let regions = [
+  "mondstadt",
+  "dragonspine",
+  "liyue",
+  "chenyu vale",
+  "inazuma",
+  "watasumi island",
+  "seirai island",
+  "sumeru",
+  "sumeru desert",
+  "fontaine",
+  "natlan",
+  "nod krai",
+];
+
+function injectFilter() {
+  regions.forEach((region) => {
+    document.querySelector(".container").insertAdjacentHTML(
+      "afterbegin",
+      `<select name="regions" id="region">
+          <option value="${region}">${region}</option>
+        </select>`
+    );
+  });
+}
+
 /* function getCards() {
   const buttons = document.querySelectorAll(".buy-button");
   //not needed unless we want filter etc.
@@ -233,7 +259,10 @@ const btnArr = Array.from(buttons);
 function logCart(product) {
   document
     .querySelector(".list-container")
-    .insertAdjacentHTML("afterbegin", `<li>${product}</li>`);
+    .insertAdjacentHTML(
+      "afterbegin",
+      `<li>${product.name}, ${product.price}</li>`
+    );
 }
 
 function getCards() {
@@ -242,12 +271,13 @@ function getCards() {
     btn.addEventListener("click", function (event) {
       /* console.log("clicked"); */
 
-      cart.push([
-        event.target.closest(".card").getAttribute("data-title"),
-        event.target.closest(".card").getAttribute("data-price"),
-      ]);
+      cart.push({
+        name: event.target.closest(".card").getAttribute("data-title"),
+        price: event.target.closest(".card").getAttribute("data-price"),
+      });
       /* cart.push(event.target.closest(".card").getAttribute("data-title")); */
       /* return cart; */
+      document.querySelector(".list-container").innerHTML = "";
       cart.forEach((product) => logCart(product));
       /* console.log(
         event.target.closest(".card").getAttribute("data-title"),
