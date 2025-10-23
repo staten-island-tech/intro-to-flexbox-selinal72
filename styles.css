@@ -37,6 +37,15 @@ h1 {
   transition: all 0.5s;
 }
 
+.filter-header {
+  width: 90vw;
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .container {
   width: 90vw;
   margin: 2rem auto;

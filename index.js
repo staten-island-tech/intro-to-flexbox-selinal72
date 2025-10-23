@@ -225,16 +225,31 @@ let regions = [
   "nod krai",
 ];
 
-function injectFilter() {
-  regions.forEach((region) => {
-    document.querySelector(".container").insertAdjacentHTML(
+function injectFilter(list) {
+  list.forEach((region) => {
+    document.querySelector(".filter-header").insertAdjacentHTML(
       "afterbegin",
-      `<select name="regions" id="region">
+      `<select class="regions" id="region">
+          <option value="all">all</option>
           <option value="${region}">${region}</option>
         </select>`
     );
   });
 }
+
+function sort() {
+  const selection = document.querySelector(".regions").value;
+  document.querySelector(".container").innerHTML = "";
+  if (selection === "all") {
+    items.forEach((item) => inject(item));
+  } else {
+    items
+      .filter((item) => item.region === selection)
+      .forEach((item) => inject(item));
+  }
+}
+
+injectFilter(regions);
 
 /* function getCards() {
   const buttons = document.querySelectorAll(".buy-button");
