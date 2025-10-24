@@ -181,11 +181,12 @@ const DOMSelectors = {
   clearFields(); // reset form inputs
 }); */
 
-function inject(item) {
+function inject(items) {
   const container = document.querySelector(".container");
-  container.insertAdjacentHTML(
-    "afterbegin",
-    `<div class="card" data-title=${item.name} data-category=${item.region} data-price=${item.price}>
+  items.forEach((item) =>
+    container.insertAdjacentHTML(
+      "afterbegin",
+      `<div class="card" data-title=${item.name} data-category=${item.region} data-price=${item.price}>
       <h2 class="card-header">${item.name}</h2>
       <img class="card-img" src="${item.img}" alt="${item.alt}/>
       <h3 class="card-seller">${item.seller}</h3>
@@ -193,13 +194,16 @@ function inject(item) {
       <h4 class="card-price">${item.price} mora</h4>
       <button type="button" class="buy-button">add to cart</button>
     </div>`
+    )
   );
 }
+
 /* inject(items[0]); */
-items.forEach((item) => inject(item));
+/* items.forEach((item) => inject(item)); */
+inject(items);
 
 function injectCart() {
-  document.querySelector(".container").insertAdjacentHTML(
+  document.querySelector(".filter-header").insertAdjacentHTML(
     "afterbegin",
     `<div class="cart-container">
     <h1>cart</h1>
@@ -210,46 +214,46 @@ function injectCart() {
 
 injectCart();
 
-let regions = [
-  "mondstadt",
-  "dragonspine",
-  "liyue",
-  "chenyu vale",
-  "inazuma",
-  "watasumi island",
-  "seirai island",
-  "sumeru",
-  "sumeru desert",
-  "fontaine",
-  "natlan",
-  "nod krai",
-];
+let regions = ["teyvat", "liyue", "chenyu vale"];
 
-function injectFilter(list) {
-  list.forEach((region) => {
-    document.querySelector(".filter-header").insertAdjacentHTML(
-      "afterbegin",
-      `<select class="regions" id="region">
-          <option value="all">all</option>
-          <option value="${region}">${region}</option>
+function injectFilter() {
+  document.querySelector(".filter-header").insertAdjacentHTML(
+    "afterbegin",
+    `<select class="regions" id="region">
+          <option value="">all</option>
         </select>`
-    );
+  );
+}
+
+function regionOptions(list) {
+  list.forEach((thing) => {
+    document
+      .querySelector(".regions")
+      .insertAdjacentHTML(
+        "beforeend",
+        `<option value="${thing}">${thing}</option>`
+      );
   });
 }
 
 function sort() {
-  const selection = document.querySelector(".regions").value;
-  document.querySelector(".container").innerHTML = "";
-  if (selection === "all") {
-    items.forEach((item) => inject(item));
-  } else {
-    items
-      .filter((item) => item.region === selection)
-      .forEach((item) => inject(item));
-  }
+  const filtered = [];
+  select = document.querySelector(".regions");
+  select.addEventListener("change", () => {
+    const selection = select.value;
+    document.querySelector(".container").innerHTML = "";
+    if (selection === "all") {
+      inject(items);
+    } else {
+      filtered.push(items.filter((item) => item.region === selection));
+      inject(filtered);
+    }
+  });
 }
 
-injectFilter(regions);
+injectFilter();
+regionOptions(regions);
+sort();
 
 /* function getCards() {
   const buttons = document.querySelectorAll(".buy-button");
