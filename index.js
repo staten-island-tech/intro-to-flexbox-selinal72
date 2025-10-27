@@ -181,26 +181,23 @@ const DOMSelectors = {
   clearFields(); // reset form inputs
 }); */
 
-function inject(items) {
+function inject(item) {
   const container = document.querySelector(".container");
-  items.forEach((item) =>
-    container.insertAdjacentHTML(
-      "afterbegin",
-      `<div class="card" data-title=${item.name} data-category=${item.region} data-price=${item.price}>
-      <h2 class="card-header">${item.name}</h2>
-      <img class="card-img" src="${item.img}" alt="${item.alt}/>
-      <h3 class="card-seller">${item.seller}</h3>
-      <h3 class="card-region">${item.region}</h3>
-      <h4 class="card-price">${item.price} mora</h4>
-      <button type="button" class="buy-button">add to cart</button>
-    </div>`
-    )
+  container.insertAdjacentHTML(
+    "afterbegin",
+    `<div class="card" data-title=${item.name} data-category=${item.region} data-price=${item.price}>
+    <h2 class="card-header">${item.name}</h2>
+    <img class="card-img" src="${item.img}" alt="${item.alt}/>
+    <h3 class="card-seller">${item.seller}</h3>
+    <h3 class="card-region">${item.region}</h3>
+    <h4 class="card-price">${item.price} mora</h4>
+    <button type="button" class="buy-button">add to cart</button>
+  </div>`
   );
 }
 
 /* inject(items[0]); */
-/* items.forEach((item) => inject(item)); */
-inject(items);
+items.forEach((item) => inject(item));
 
 function injectCart() {
   document.querySelector(".filter-header").insertAdjacentHTML(
@@ -236,41 +233,6 @@ function regionOptions(list) {
   });
 }
 
-function sort() {
-  const filtered = [];
-  select = document.querySelector(".regions");
-  select.addEventListener("change", () => {
-    const selection = select.value;
-    document.querySelector(".container").innerHTML = "";
-    if (selection === "all") {
-      inject(items);
-    } else {
-      filtered.push(items.filter((item) => item.region === selection));
-      inject(filtered);
-    }
-  });
-}
-
-injectFilter();
-regionOptions(regions);
-sort();
-
-/* function getCards() {
-  const buttons = document.querySelectorAll(".buy-button");
-  //not needed unless we want filter etc.
-  const btnArr = Array.from(buttons);
-  btnArr.forEach((btn) =>
-    btn.addEventListener("click", function (event) {
-      console.log(
-        event.target.closest(".card").getAttribute("data-title"),
-        "added to cart"
-        event.target.textContent
-      );
-    })
-  );
-}
-getCards(); */
-
 const cart = [];
 const buttons = document.querySelectorAll(".buy-button");
 const btnArr = Array.from(buttons);
@@ -288,8 +250,6 @@ function getCards() {
   //not needed unless we want filter etc.
   btnArr.forEach((btn) =>
     btn.addEventListener("click", function (event) {
-      /* console.log("clicked"); */
-
       cart.push({
         name: event.target.closest(".card").getAttribute("data-title"),
         price: event.target.closest(".card").getAttribute("data-price"),
@@ -307,13 +267,45 @@ function getCards() {
   );
   /* document.querySelector(".cart").textContent = `testing`; */
 }
+
+function pricing(cart) {
+  const prices = [];
+  btnArr.forEach((btn) =>
+    btn.addEventListener("click", function (event) {
+      prices.push(
+        Number(event.target.closest(".card").getAttribute("data-price"))
+      );
+      let total = 0;
+      prices.forEach((price) => {
+        total += price;
+      });
+      document
+        .querySelector(".list-container")
+        .insertAdjacentHTML("beforeend", `<h2>your total is ${total} mora</h2`);
+    })
+  );
+}
+
+function sort() {
+  select = document.querySelector(".regions");
+  select.addEventListener("change", () => {
+    const selection = select.value;
+    document.querySelector(".container").innerHTML = "";
+    if (selection === "all") {
+      inject(items);
+    } else {
+      items
+        .filter((item) => item.region === selection)
+        .forEach((item) => inject(item));
+    }
+  });
+}
+
+injectFilter();
+regionOptions(regions);
 getCards();
-
-/* function carting(product) {
-  document.querySelector(".container").insertAdjacentHTML("afterbegin", `<h1 class="cart">test</h1>`);
-} */
-
-/* cart.forEach((product) => carting(product)); */
+pricing(cart);
+sort();
 
 //make array
 //put cards on screen with js
@@ -323,10 +315,6 @@ getCards();
 /* function removeItem(event) {
   event.target.parentElement.remove();
 } */
-
-/* const button = document.querySelectorAll(".button");
-
-function buy() {} */
 
 /* const books = [];
 
@@ -351,6 +339,4 @@ function filterByGenre(genre) {
       card.style.display = "none";
     }
   })
-}
-
-filterByGenre("Mystery"); */
+}*/
