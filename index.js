@@ -254,21 +254,13 @@ function getCards() {
         name: event.target.closest(".card").getAttribute("data-title"),
         price: event.target.closest(".card").getAttribute("data-price"),
       });
-      /* cart.push(event.target.closest(".card").getAttribute("data-title")); */
-      /* return cart; */
       document.querySelector(".list-container").innerHTML = "";
       cart.forEach((product) => logCart(product));
-      /* console.log(
-        event.target.closest(".card").getAttribute("data-title"),
-        "added to cart",
-        event.target.textContent
-      ); */
     })
   );
-  /* document.querySelector(".cart").textContent = `testing`; */
 }
 
-function pricing(cart) {
+function pricing() {
   const prices = [];
   btnArr.forEach((btn) =>
     btn.addEventListener("click", function (event) {
