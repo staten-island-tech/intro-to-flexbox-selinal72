@@ -211,18 +211,17 @@ function injectCart() {
 
 injectCart();
 
-let regions = ["teyvat", "liyue", "chenyu vale"];
+let regions = ["all", "teyvat", "liyue", "chenyu vale"];
 
 function injectFilter() {
   document.querySelector(".filter-header").insertAdjacentHTML(
     "afterbegin",
     `<select class="regions" id="region">
-          <option value="">all</option>
         </select>`
   );
 }
 
-function regionOptions(list) {
+function injectFilter(list) {
   list.forEach((thing) => {
     document
       .querySelector(".regions")
@@ -246,16 +245,20 @@ function logCart(product) {
     );
 }
 
-function getCards() {
+function getCards(event) {
   //not needed unless we want filter etc.
+  cart.push({
+    name: event.closest(".card").getAttribute("data-title"),
+    price: event.closest(".card").getAttribute("data-price"),
+  });
+  document.querySelector(".list-container").innerHTML = "";
+  cart.forEach((product) => logCart(product));
+}
+
+function attachListeners() {
   btnArr.forEach((btn) =>
     btn.addEventListener("click", function (event) {
-      cart.push({
-        name: event.target.closest(".card").getAttribute("data-title"),
-        price: event.target.closest(".card").getAttribute("data-price"),
-      });
-      document.querySelector(".list-container").innerHTML = "";
-      cart.forEach((product) => logCart(product));
+      getCards(event.target);
     })
   );
 }
@@ -284,18 +287,20 @@ function sort() {
     const selection = select.value;
     document.querySelector(".container").innerHTML = "";
     if (selection === "all") {
-      inject(items);
+      items.forEach((item) => inject(item));
+      attachListeners();
     } else {
       items
         .filter((item) => item.region === selection)
         .forEach((item) => inject(item));
+      attachListeners();
     }
   });
 }
 
 injectFilter();
 regionOptions(regions);
-getCards();
+attachListeners();
 pricing(cart);
 sort();
 
