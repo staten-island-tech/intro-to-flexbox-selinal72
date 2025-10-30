@@ -213,15 +213,20 @@ injectCart();
 
 let regions = ["all", "teyvat", "liyue", "chenyu vale"];
 
-function injectFilter() {
+/* function injectFilter() {
   document.querySelector(".filter-header").insertAdjacentHTML(
     "afterbegin",
     `<select class="regions" id="region">
         </select>`
   );
-}
+} */
 
 function injectFilter(list) {
+  document.querySelector(".filter-header").insertAdjacentHTML(
+    "afterbegin",
+    `<select class="regions" id="region">
+        </select>`
+  );
   list.forEach((thing) => {
     document
       .querySelector(".regions")
@@ -233,8 +238,6 @@ function injectFilter(list) {
 }
 
 const cart = [];
-const buttons = document.querySelectorAll(".buy-button");
-const btnArr = Array.from(buttons);
 
 function logCart(product) {
   document
@@ -250,12 +253,16 @@ function getCards(event) {
   cart.push({
     name: event.closest(".card").getAttribute("data-title"),
     price: event.closest(".card").getAttribute("data-price"),
+    quantity: 0,
   });
   document.querySelector(".list-container").innerHTML = "";
   cart.forEach((product) => logCart(product));
+  pricing();
 }
 
 function attachListeners() {
+  const buttons = document.querySelectorAll(".buy-button");
+  const btnArr = Array.from(buttons);
   btnArr.forEach((btn) =>
     btn.addEventListener("click", function (event) {
       getCards(event.target);
@@ -264,21 +271,11 @@ function attachListeners() {
 }
 
 function pricing() {
-  const prices = [];
-  btnArr.forEach((btn) =>
-    btn.addEventListener("click", function (event) {
-      prices.push(
-        Number(event.target.closest(".card").getAttribute("data-price"))
-      );
-      let total = 0;
-      prices.forEach((price) => {
-        total += price;
-      });
-      document
-        .querySelector(".list-container")
-        .insertAdjacentHTML("beforeend", `<h2>your total is ${total} mora</h2`);
-    })
-  );
+  let total = 0;
+  cart.forEach((item) => (total = total + Number(item.price)));
+  document
+    .querySelector(".list-container")
+    .insertAdjacentHTML("beforeend", `<h2>your total is ${total} mora</h2`);
 }
 
 function sort() {
@@ -298,10 +295,10 @@ function sort() {
   });
 }
 
-injectFilter();
-regionOptions(regions);
+injectFilter(regions);
+/* regionOptions(regions); */
 attachListeners();
-pricing(cart);
+
 sort();
 
 //make array
